@@ -7,7 +7,6 @@
   <title>TexGov</title>
   <link rel="stylesheet" href="style.css">
   <style>
-
     body {
       font-family: Arial, sans-serif;
       background-color: #f9f9f9;
@@ -24,7 +23,7 @@
     #button-container {
       text-align: center; 
     }
-    
+
     button {
       background-color: #4CAF50; 
       border: none;
@@ -47,13 +46,13 @@
       border: 2px solid #4CAF50;
     }
 
-    #beer-list {
+    #employee-list {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
     }
 
-    .beer-card {
+    .employee-card {
       background-color: #fff;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -62,24 +61,24 @@
       width: 300px;
     }
 
-    .beer-card h2 {
+    .employee-card h2 {
       font-size: 18px;
       margin-bottom: 10px;
     }
 
-    .beer-card p {
+    .employee-card p {
       font-size: 14px;
       color: #777;
     }
-
   </style>
 </head>
 
 <body>
 
   <h1>Explore Texas Government Employees with TexGov</h1>
+  
     <div id="button-container">
-    <button onclick="displayBeers()">
+    <button onclick="displayEmployees()">
       All
     </button>
     <button onclick="filterByTitle('SENATE')">
@@ -93,57 +92,56 @@
     </button>
   </div>
   
-  <div id="beer-list"></div>
+  <div id="employee-list"></div>
 
   <script>
-
-    async function fetchBeers() {
+    async function fetchEmployees() {
       const response = await fetch('https://weblabs.web.app/api/salaries.json');
       const data = await response.json();
       return data;
     }
 
-    async function displayBeers() {
-      const beerList = document.getElementById('beer-list');
-      const beers = await fetchBeers();
+    async function displayEmployees() {
+      const employeeList = document.getElementById('employee-list');
+      const employees = await fetchEmployees();
 
       let html = '';
 
-      for (let beer of beers) {
+      for (let employee of employees) {
         html += `
-                  <div class="beer-card">
-                      <h2>${beer.FIRSTNAME} ${beer.LASTNAME}</h2>
-                      <p>Title: ${beer.NAME}</p>
-                      <p>Annual Salary:$${beer.ANNUAL}</p>
+                  <div class="employee-card">
+                      <h2>${employee.FIRSTNAME} ${employee.LASTNAME}</h2>
+                      <p>Title: ${employee.NAME}</p>
+                      <p>Annual Salary:$${employee.ANNUAL}</p>
                   </div>
               `;
       }
 
-      beerList.innerHTML = html;
+      employeeList.innerHTML = html;
     }
 
     async function filterByTitle(name) {
-      const beerList = document.getElementById('beer-list');
-      const beers = await fetchBeers();
+      const employeeList = document.getElementById('employee-list');
+      const employees = await fetchEmployees();
 
       let html = '';
 
-      for (let beer of beers) {
-        if (beer.NAME === name ){
+      for (let employee of employees) {
+        if (employee.NAME === name ){
           html += `
-                    <div class="beer-card">
-                        <h2>${beer.FIRSTNAME} ${beer.LASTNAME}</h2>
-                        <p>Title: ${beer.NAME}</p>
-                        <p>Annual Salary:$${beer.ANNUAL}</p>
+                    <div class="employee-card">
+                        <h2>${employee.FIRSTNAME} ${employee.LASTNAME}</h2>
+                        <p>Title: ${employee.NAME}</p>
+                        <p>Annual Salary:$${employee.ANNUAL}</p>
                     </div>
                 `;
         }
       }
 
-      beerList.innerHTML = html;
+      employeeList.innerHTML = html;
     }
-
-    displayBeers();
+    
+    displayEmployees();
 
   </script>
 </body>
